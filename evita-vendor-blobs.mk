@@ -94,4 +94,8 @@ PRODUCT_COPY_FILES += \
   vendor/htc/evita/proprietary/lib/libril-qcril-hook-oem.so:system/lib/libril-qcril-hook-oem.so \
   vendor/htc/evita/proprietary/lib/libril.so:system/lib/libril.so \
   vendor/htc/evita/proprietary/lib/hw/sensors.elite.so:system/lib/hw/sensors.elite.so \
+  vendor/htc/evita/proprietary/lib/libimu.so:system/lib/libimu.so \
+  vendor/htc/evita/proprietary/lib/libmllite.so:system/lib/libmllite.so \
+  vendor/htc/evita/proprietary/lib/libmlplatform.so:system/lib/libmlplatform.so \
+  vendor/htc/evita/proprietary/lib/libmpl.so:system/lib/libmpl.so \
   vendor/htc/evita/proprietary/lib/libv8.so:system/lib/libv8.so
