@@ -36,11 +36,22 @@ PRODUCT_COPY_FILES += \
   vendor/htc/evita/proprietary/bin/zchgd:system/bin/zchgd \
   vendor/htc/evita/proprietary/lib/libacdbloader.so:system/lib/libacdbloader.so \
   vendor/htc/evita/proprietary/lib/libaudcal.so:system/lib/libaudcal.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_imx074_default_video.so:system/lib/libchromatix_imx074_default_video.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_imx074_preview.so:system/lib/libchromatix_imx074_preview.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_imx105_hfr.so:system/lib/libchromatix_imx105_hfr.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_imx105_zsl.so:system/lib/libchromatix_imx105_zsl.so \
   vendor/htc/evita/proprietary/lib/libchromatix_s5k3h2yx_default_video.so:system/lib/libchromatix_s5k3h2yx_default_video.so \
   vendor/htc/evita/proprietary/lib/libchromatix_s5k3h2yx_hdr.so:system/lib/libchromatix_s5k3h2yx_hdr.so \
   vendor/htc/evita/proprietary/lib/libchromatix_s5k3h2yx_hfr.so:system/lib/libchromatix_s5k3h2yx_hfr.so \
   vendor/htc/evita/proprietary/lib/libchromatix_s5k3h2yx_preview.so:system/lib/libchromatix_s5k3h2yx_preview.so \
   vendor/htc/evita/proprietary/lib/libchromatix_s5k3h2yx_zsl.so:system/lib/libchromatix_s5k3h2yx_zsl.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k4e5yx_default_video.so:system/lib/libchromatix_s5k4e5yx_default_video.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k4e5yx_hfr.so:system/lib/libchromatix_s5k4e5yx_hfr.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k4e5yx_preview.so:system/lib/libchromatix_s5k4e5yx_preview.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k4e5yx_zsl.so:system/lib/libchromatix_s5k4e5yx_zsl.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k6a1gx_default_video.so:system/lib/libchromatix_s5k6a1gx_default_video.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k6a1gx_preview.so:system/lib/libchromatix_s5k6a1gx_preview.so \
+  vendor/htc/evita/proprietary/lib/libchromatix_s5k6a1gx_zsl.so:system/lib/libchromatix_s5k6a1gx_zsl.so \
   vendor/htc/evita/proprietary/lib/hw/camera.msm8960.so:system/lib/hw/camera.msm8960.so \
   vendor/htc/evita/proprietary/lib/libcamera_client.so:system/lib/libcamera_client.so \
   vendor/htc/evita/proprietary/lib/libcameraface.so:system/lib/libcameraface.so \
