@@ -1,0 +1,118 @@
+#!/system/bin/sh
+#created by -viperboy-
+
+tweak_screen_on=0
+tweak_screen_off=0
+
+holdon_timeout=100000
+
+tweak_gov="ondemand"
+gov_path=/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+ondemand_sampling_rate_awake=40000
+ondemand_up_threshold_awake=80
+ondemand_down_differential_awake=12
+ondemand_sampling_down_factor_awake=3
+
+ondemand_sampling_rate_sleep=80000
+ondemand_up_threshold_sleep=95
+ondemand_down_differential_sleep=5
+ondemand_sampling_down_factor_sleep=1
+
+ondemand_sampling_rate_path=/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+ondemand_up_threshold_path=/sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+ondemand_down_differential_path=/sys/devices/system/cpu/cpufreq/ondemand/down_differential
+ondemand_sampling_down_factor_path=/sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+
+while : ; do
+    awake=`cat /sys/power/wait_for_fb_wake`
+    if [ $awake = "awake" ]; then
+		chmod 666 /sys/devices/system/cpu/cpu1/online
+		usleep $holdon_timeout
+		echo "1" > /sys/devices/system/cpu/cpu1/online
+		if [ `cat /sys/devices/system/cpu/cpu1/online` = "1" ]; then
+			echo "*** DCM - Screen On - CPU1 Forced Online! ***"
+			log -p i -t DCM "*** Screen On - CPU1 Forced Online! ***"
+		else
+			echo "*** DCM - WARNING!!! - Screen On - CPU1 could not be forced online! ***"
+			log -p w -t DCM "*** Screen On - CPU1 could not be forced online! ***"
+		fi
+		chmod 444 /sys/devices/system/cpu/cpu1/online
+		if [ $tweak_screen_on = "1" ]; then
+			if [ `cat $gov_path` != "ondemand" ]; then
+				echo $tweak_gov > $gov_path
+			fi
+			echo $ondemand_sampling_rate_awake > $ondemand_sampling_rate_path
+			log -p i -t DCM "*** set sampling_rate to $ondemand_sampling_rate_awake ***"
+			echo $ondemand_up_threshold_awake > $ondemand_up_threshold_path
+			log -p i -t DCM "*** set up_threshold to $ondemand_up_threshold_awake ***"
+			echo $ondemand_down_differential_awake > $ondemand_down_differential_path
+			log -p i -t DCM "*** set down_differential to $ondemand_down_differential_awake ***"
+			echo $ondemand_sampling_down_factor_awake > $ondemand_sampling_down_factor_path
+			log -p i -t DCM "*** set sampling_down_factor to $ondemand_sampling_down_factor_awake ***"
+		fi
+		if [ $tweak_screen_on = "1" ]; then
+			echo "*** DCM - tweak_me enabled - Screen on tweaks applied! ***"
+			log -p i -t DCM "*** tweak_me enabled - Screen on tweaks applied! ***"
+		elif [ $tweak_screen_on = "0" ]; then
+			echo "*** DCM - tweak_me disabled ***"
+			log -p i -t DCM "*** tweak_me disabled ***"
+		fi
+		echo
+		awake=
+    fi
+
+    sleep=`cat /sys/power/wait_for_fb_sleep`
+    if [ $sleep = "sleeping" ]; then
+		chmod 666 /sys/devices/system/cpu/cpu1/online
+		usleep $holdon_timeout
+		echo "0" > /sys/devices/system/cpu/cpu1/online
+		if [ `cat /sys/devices/system/cpu/cpu1/online` = "0" ]; then
+			echo "*** DCM - Screen Off - CPU1 Forced Offline! ***"
+			log -p i -t DCM "*** Screen Off - CPU1 Forced Offline! ***"
+		else
+			echo "*** DCM - WARNING!!! - Screen Off - CPU1 could not be forced offline, retrying! ***"
+			log -p w -t DCM "*** Screen Off - CPU1 could not be forced offline, retrying! ***"
+		fi
+		usleep $holdon_timeout
+		if [ `cat /sys/devices/system/cpu/cpu1/online` != "0" ]; then
+			echo "0" > /sys/devices/system/cpu/cpu1/online
+			echo "*** DCM - WARNING!!! - Screen Off - CPU1 was somehow toggled back online, forcing offline again! ***"
+			log -p w -t DCM "*** Screen Off - CPU1 was somehow toggled back online, forcing offline again! ***"
+			if [ `cat /sys/devices/system/cpu/cpu1/online` != "0" ]; then
+				echo "*** DCM - ERROR!!! - Screen Off - CPU1 could not be forced offline! ***"
+				log -p e -t DCM "*** Screen Off - CPU1 could not be forced offline! ***"
+			else
+				echo "*** DCM - Screen Off - CPU1 Forced Offline! (finally) ***"
+				log -p i -t DCM "*** Screen Off - CPU1 Forced Offline! (finally) ***"
+			fi
+		else
+			echo "*** DCM - Screen Off - CPU1 Forced Offline! (recheck) ***"
+			log -p i -t DCM "*** Screen Off - CPU1 Forced Offline! (recheck) ***"
+		
+		fi
+		chmod 444 /sys/devices/system/cpu/cpu1/online
+		if [ $tweak_screen_off = "1" ]; then
+			if [ `cat $gov_path` != "ondemand" ]; then
+				echo $tweak_gov > $gov_path
+			fi
+			echo $ondemand_sampling_rate_sleep > $ondemand_sampling_rate_path
+			log -p i -t DCM "*** set sampling_rate to $ondemand_sampling_rate_sleep ***"
+			echo $ondemand_up_threshold_sleep > $ondemand_up_threshold_path
+			log -p i -t DCM "*** set up_threshold to $ondemand_up_threshold_sleep ***"
+			echo $ondemand_down_differential_sleep > $ondemand_down_differential_path
+			log -p i -t DCM "*** set down_differential to $ondemand_down_differential_sleep ***"
+			echo $ondemand_sampling_down_factor_sleep > $ondemand_sampling_down_factor_path
+			log -p i -t DCM "*** set sampling_down_factor to $ondemand_sampling_down_factor_sleep ***"
+		fi
+		if [ $tweak_screen_off = "1" ]; then
+			echo "*** DCM - tweak_me enabled - Screen off tweaks applied! ***"
+			log -p i -t DCM "*** tweak_me enabled - Screen on tweaks applied! ***"
+		elif [ $tweak_screen_off = "0" ]; then
+			echo "*** DCM - tweak_me disabled ***"
+			log -p i -t DCM "*** tweak_me disabled ***"
+		fi
+		echo
+		sleep=
+    fi
+done &
