@@ -1,8 +1,0 @@
-#!/system/bin/sh
-#created by -viperboy-
-
-while : ; do
-    echo -n "CPU1 status: `cat /sys/devices/system/cpu/cpu1/online`"
-	echo
-	usleep 250000
-done &
